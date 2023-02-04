@@ -121,20 +121,7 @@ sub_directories = ap.list_of_sub_directories(path_to_images)
 img_anno = ap.img_path_anno_path(sub_directories)
 #check_for_missing_images_annotations(img_anno)
 
-## 8. Data Summary
-Creates a table of the number of closed_roof_tanks, water_treatment_tank, spherical_tank, external_floating_roof_tank, water_tower for all of the images. 
 
-python data_clean_descrip.py  --parent_directory \dir_containing_all_annotator_folders 
-                              --tiles_remaining path_to_numpy_array
-                              --tiles_labeled path_to_numpy_array
-                                             
-Example for complete dataset:
-python data_clean_descrip.py --complete_dataset_directory \\oit-nas-fe13dc.oit.duke.edu\\data_commons-borsuk\\verified\verified_sets\complete_dataset --annotation_directory chips_positive_xml 
-
-python data_clean_descrip.py --complete_dataset_directory \\oit-nas-fe13dc.oit.duke.edu\\data_commons-borsuk\\test_set --annotation_directory chips_positive_corrected_xml
-#--tiles_remaining tile_name_tile_url_remaining_expanded.npy --tiles_labeled tile_name_tile_url_labeled.npy 
-
-python data_clean_descrip.py --complete_dataset_directory \\oit-nas-fe13dc.oit.duke.edu\\data_commons-borsuk\\complete_dataset --annotation_directory chips_positive_corrected_xml
 
 
 
@@ -164,3 +151,17 @@ Reordering
 
 - make_complete_dataset.sh 
 - data_clean_descrip.sh (after complete dataset)
+## 8. Data Summary
+Creates a table of the number of closed_roof_tanks, water_treatment_tank, spherical_tank, external_floating_roof_tank, water_tower for all of the images. 
+
+python data_clean_descrip.py  --parent_directory \dir_containing_all_annotator_folders 
+                              --tiles_remaining path_to_numpy_array
+                              --tiles_labeled path_to_numpy_array
+                                             
+Example for complete dataset:
+python data_clean_descrip.py --complete_dataset_directory \\oit-nas-fe13dc.oit.duke.edu\\data_commons-borsuk\\verified\verified_sets\complete_dataset --annotation_directory chips_positive_xml 
+
+python data_clean_descrip.py --complete_dataset_directory \\oit-nas-fe13dc.oit.duke.edu\\data_commons-borsuk\\test_set --annotation_directory chips_positive_corrected_xml
+#--tiles_remaining tile_name_tile_url_remaining_expanded.npy --tiles_labeled tile_name_tile_url_labeled.npy 
+
+python data_clean_descrip.py --complete_dataset_directory \\oit-nas-fe13dc.oit.duke.edu\\data_commons-borsuk\\complete_dataset --annotation_directory chips_positive_corrected_xml
