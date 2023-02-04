@@ -157,7 +157,7 @@ destination_filenames
 
 
 Reordering
-- Compile Data
+- compare_imgs.sh
 - correct_incorrect_labels.sh
 - tile_level_annotation_dataset.sh 
 
