@@ -35,16 +35,16 @@ import data_eng.az_proc as ap
 def get_args_parse():
     parser = argparse.ArgumentParser(
         description='This script supports seperating positive and negative chips after annotations')
-    parser.add_argument('--annotation_dir', type=str, default=None,
-                        help='path to annotation files directory.')
+    parser.add_argument('--img_anno_dir', type=str, default=None,
+                        help='Path to dir holding imgs and annotations; see dist_folder_map.txt for directory map.')
     parser.add_argument('--parent_dir', type=str, default=None,
-                        help='path to parent directory, holding the annotation directory.')
+                        help='Path to parent dir; see dist_folder_map.txt for directory map.')
     args = parser.parse_args()
     return args
 
 def main(args):
     #create the processing class
-    dist = ap.annotator(args.annotation_dir)
+    dist = ap.annotator(args.img_anno_dir)
     dist.state_dcc_directory(args.parent_dir)
     dist.make_subdirectories()
     

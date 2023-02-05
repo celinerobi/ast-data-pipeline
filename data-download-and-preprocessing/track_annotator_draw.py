@@ -26,7 +26,6 @@ def get_args_parse():
     
 def main(args): 
     img_anno = ap.img_path_anno_path(ap.list_of_sub_directories(args.parent_dir))
-    #print(img_anno)
     tracking_array = ap.reference_image_annotation_file_with_annotator(img_anno, args.tracker_file_path) #load existing and update 
     
     #Save numpy array
@@ -36,11 +35,9 @@ def main(args):
     column_names = ["tile_name", "chip_name", "chip pathway", "xml annotation", 
                     "annotator - draw","annotator - verify coverage",
                     "annotator - verify quality", "annotator - verify classes"]
-    
     tile_img_annotation_annotator_df = pd.DataFrame(data = tracking_array, 
                                                    index = tracking_array[:,1], 
                                                    columns = column_names)
-    
     tile_img_annotation_annotator_df.to_csv('outputs/tile_img_annotation_annotator_df.csv')
 
 if __name__ == '__main__':

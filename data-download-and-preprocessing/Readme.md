@@ -29,9 +29,9 @@ The installation infromation and guide can be found at https://github.com/tzutal
 ## 0. Tile Identification 
 NAIP data is accessed using the Microsoft Planetary Computer STAC API. To download tiles of interest, the file pathway have been identified and collected using the EIA, HFID, and other datasources. The naip_pathways.ipynb jupyter notebook processess these datasources and creates/saves a numpy array of the tile names and tile urls.
 ## 1. Data Download
-Labelwork_distribution_dcc.py distributes tiles to annotators.
+download_distribution.py distributes tiles to annotators.
 
-python cred/AST_dataset/data_download_and_preprocessing/labelwork_distribution_dcc.py --number_of_tiles number
+python cred/AST_dataset/data_download_and_preprocessing/download_distribution.py --number_of_tiles number
                                             --annotation_directory annotator_name
                                             --parent_directory \dir_containing_chips_and_annotations
                                             --tiles_remaining path_to_numpy_array
@@ -99,40 +99,18 @@ python verification_and_tracking.py     --tracker_file_path path_to_tracker_nump
 Example:
 python verification_and_tracking.py --tracker_file_path outputs\tile_img_annotation_annotator.npy  --home_directory \\oit-nas-fe13dc.oit.duke.edu\\data_commons-borsuk\\ --verifiers Sunny_Cleave_Robinson --annotator_allocation Niculescu --set_number 7
 
+
+
 ## 5. Create Complete Dataset
-python make_complete_dataset.py  --parent_directory \dir_containing_all_chips_and_annotations
-                                             
-Example:
-python make_complete_dataset.py --parent_directory \\oit-nas-fe13dc.oit.duke.edu\\data_commons-borsuk\\compiled_dataset\compile_by_tile_1 --original True
-\\oit-nas-fe13dc.oit.duke.edu\\data_commons-borsuk\\compiled_dataset
+
 ## 6. Standardize Object Labels 
-python correct_incon_labels.py  --parent_directory \dir_containing_all_annotator_folders
-                                             
-Example:
-python correct_incon_labels.py --parent_directory D:\Unverified_images\student_reviewed_unverified_images
-python correct_incon_labels.py --complete_dataset_directory \\oit-nas-fe13dc.oit.duke.edu\\data_commons-borsuk\\test_set
 
-python correct_incon_labels.py --complete_dataset_directory \\oit-nas-fe13dc.oit.duke.edu\\data_commons-borsuk\\complete_dataset
-
-Z:\temp\rechip
 ### 7. Identify Missing Annotations 
-path_to_images = "D:/Unverified_images/student_reviewed_unverified_images"
-sub_directories = ap.list_of_sub_directories(path_to_images)
-img_anno = ap.img_path_anno_path(sub_directories)
-#check_for_missing_images_annotations(img_anno)
 
-
-
-
-
-### Issue with missing rows
-chip_naming_convention_correction.ipynb
-allocate_remaining_images_march_2022.ipynb
 
 ## Post Procesing
 
 ## 8. Move and Download Tiles
-    
 python move_download_tiles.py
 
 
