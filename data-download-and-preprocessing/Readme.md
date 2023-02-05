@@ -75,6 +75,16 @@ python seperate_positive_negative_images.py  --annotation_directory unverified_i
 
 python seperate_positive_negative_images.py  --annotation_directory student_reviewed_images17_Sunny --parent_directory \\oit-nas-fe13dc.oit.duke.edu\\data_commons-borsuk\\unverified_images\student_reviewed_unverified_images_set7\Sunny
 
+
+
+
+
+
+
+
+
+
+
 ## 3. Record Annotator
 After the annotators have reviewed their images to fix any small errors, the organizer relocates their images into the *Unverified* folder. This folder is organized by annotator, by annotation set. To record which annotations have been recorded by which annotator in a centralized location, the following script is run. This produces two outputs, a npy array and a csv which indicate the tile, chip, xml, and annotator. 
 
@@ -101,32 +111,14 @@ python verification_and_tracking.py --tracker_file_path outputs\tile_img_annotat
 
 
 
-## 5. Create Complete Dataset
-
-## 6. Standardize Object Labels 
-
-### 7. Identify Missing Annotations 
-
-
-## Post Procesing
-
-## 8. Move and Download Tiles
-python move_download_tiles.py
-
-
-# 9. Image Characteristics
-python image_characteristics.py
-destination_filenames
-
-
-
-
 Reordering
 - compare_imgs.sh
+## 6. Standardize Object Labels 
 - correct_incorrect_labels.sh
+
 - tile_level_annotation_dataset.sh 
 
-
+## 5. Create Complete Dataset
 - make_complete_dataset.sh 
 - data_clean_descrip.sh (after complete dataset)
 ## 8. Data Summary
@@ -143,3 +135,13 @@ python data_clean_descrip.py --complete_dataset_directory \\oit-nas-fe13dc.oit.d
 #--tiles_remaining tile_name_tile_url_remaining_expanded.npy --tiles_labeled tile_name_tile_url_labeled.npy 
 
 python data_clean_descrip.py --complete_dataset_directory \\oit-nas-fe13dc.oit.duke.edu\\data_commons-borsuk\\complete_dataset --annotation_directory chips_positive_corrected_xml
+
+
+
+### 7. Identify Missing Annotations 
+## Post Procesing
+## 8. Move and Download Tiles
+python move_download_tiles.py
+# 9. Image Characteristics
+python image_characteristics.py
+destination_filenames
