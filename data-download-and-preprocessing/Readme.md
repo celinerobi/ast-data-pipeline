@@ -101,34 +101,26 @@ python verification_and_tracking.py --tracker_file_path outputs\tile_img_annotat
 
 
 
-Reordering
+## 5. Compare Images to ensure image name and data match
 - compare_imgs.sh
+
 ## 6. Standardize Object Labels 
 - correct_incorrect_labels.sh
 
+## 7. Merge and Compile Tile Level Annotations
 - tile_level_annotation_dataset.sh 
 
-## 5. Create Complete Dataset
+## 8. Create Complete Dataset
 - make_complete_dataset.sh 
+
+## 9. Data Summary
 - data_clean_descrip.sh (after complete dataset)
-## 8. Data Summary
-Creates a table of the number of closed_roof_tanks, water_treatment_tank, spherical_tank, external_floating_roof_tank, water_tower for all of the images. 
-
-python data_clean_descrip.py  --parent_directory \dir_containing_all_annotator_folders 
-                              --tiles_remaining path_to_numpy_array
-                              --tiles_labeled path_to_numpy_array
-                                             
-Example for complete dataset:
-python data_clean_descrip.py --complete_dataset_directory \\oit-nas-fe13dc.oit.duke.edu\\data_commons-borsuk\\verified\verified_sets\complete_dataset --annotation_directory chips_positive_xml 
-
-python data_clean_descrip.py --complete_dataset_directory \\oit-nas-fe13dc.oit.duke.edu\\data_commons-borsuk\\test_set --annotation_directory chips_positive_corrected_xml
-#--tiles_remaining tile_name_tile_url_remaining_expanded.npy --tiles_labeled tile_name_tile_url_labeled.npy 
-
-python data_clean_descrip.py --complete_dataset_directory \\oit-nas-fe13dc.oit.duke.edu\\data_commons-borsuk\\complete_dataset --annotation_directory chips_positive_corrected_xml
 
 
 
-### 7. Identify Missing Annotations 
+
+
+
 ## Post Procesing
 ## 8. Move and Download Tiles
 python move_download_tiles.py

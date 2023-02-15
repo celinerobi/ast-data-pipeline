@@ -52,7 +52,7 @@ def main(args):
         dist = ap.annotator(sub_directory)
         dist.state_parent_dir(args.parent_dir)
         dist.make_subdirectories()    
-        annotations, images = dist.move_images_annotations_to_complete_dataset(args.complete_dir, args.include_tiles,
+        annotations, images = dist.move_images_annotations_to_complete_dataset(args.complete_dir, 
                                                                                args.xml_folder_name)
 
         counter_annotations += annotations # count the number of annotations
