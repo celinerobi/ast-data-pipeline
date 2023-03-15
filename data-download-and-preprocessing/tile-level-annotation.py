@@ -112,6 +112,12 @@ def main(args):
     political_boundaries_time = datetime.now()
     print('Duration For Adding the state: {}'.format(political_boundaries_time - merge_tile_database_time))
     
+    # add quadid and capture data 
+    #tile_level_annotations.tile_name[2:12]
+    #df.applymap(lambda x: x**2)
+    tile_database["quadid"] = tile_database.apply(lambda row: row.tile_name[2:12], axis=1)
+    tile_database["capturedate"] = tile_database.apply(lambda row: row.tile_name.rsplit('_',1)[1], axis=1)
+    
     # Save tile dabasebase
     fc.write_gdf(tile_database, args.tile_level_annotation_dir, args.tile_level_annotation_dataset_filename)
     end_time = datetime.now()
