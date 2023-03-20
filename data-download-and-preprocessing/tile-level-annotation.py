@@ -117,7 +117,7 @@ def main(args):
     #df.applymap(lambda x: x**2)
     tile_database["quadid"] = tile_database.apply(lambda row: row.tile_name[2:12], axis=1)
     tile_database["capturedate"] = tile_database.apply(lambda row: row.tile_name.rsplit('_',1)[1], axis=1)
-    
+    tile_level_annotations.reset_index(drop=True, inplace=True)
     # Save tile dabasebase
     fc.write_gdf(tile_database, args.tile_level_annotation_dir, args.tile_level_annotation_dataset_filename)
     end_time = datetime.now()
