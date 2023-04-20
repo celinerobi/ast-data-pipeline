@@ -5,12 +5,15 @@ Correct inconsistent labels
 """
 Import Packages
 """
+import os
+import sys
 import shutil
 import xml.etree.ElementTree as et
 import argparse
 import tqdm
-import os
-import sys
+import fiona
+import geopandas as gpd
+import shapely
 from PIL import Image
 import numpy as np
 from glob import glob
@@ -27,6 +30,9 @@ def get_args_parse():
                         help='include tiles (False), or do not include tiles (True) annotations')
     parser.add_argument('--complete_dir', type=str, default=False,
                         help='Path to directory to store complete dataset')
+    parser.add_argument('--tile_level_annotation_dataset_path', type=str, 
+                        default="/hpc/group/borsuklab/ast/tile-level-annotations/tile_level_annotations.geojson", 
+                        help='path to dataset holding of tile level annotation')
     args = parser.parse_args()
     return args
 
@@ -38,26 +44,25 @@ def main(args):
         for root, dirs, files in os.walk(sub_directory):
             if "chips_positive" in dirs:
                 sub_directories.append(root)
+    #identify images with annotations using tile level annotation dataset
+    tile_level_annotations = gpd.read_file(args.tile_level_annotation_dataset_path)
+    images_with_annotations = [item for images in tile_level_annotations.image_name for item in images]
+    images_with_annotations = np.unique(images_with_annotations)
+    images_with_annotations = set(images_with_annotations)  # this reduces the lookup time from O(n) to O(1)
 
     ### Move the annotations + images 
-    counter_annotations = 0
     counter_images = 0
-
     for i in tqdm.tqdm(range(len(sub_directories))):
         sub_directory = sub_directories[i].rsplit("/", 1)[1] # get the sub folders for each annotator
-
         print("The current subdirectory:", sub_directory)
-
         # Functions to move the annotations + images into folders
         dist = ap.annotator(sub_directory)
         dist.state_parent_dir(args.parent_dir)
         dist.make_subdirectories()    
-        annotations, images = dist.move_images_annotations_to_complete_dataset(args.complete_dir, 
+        images = dist.move_images_annotations_to_complete_dataset(args.complete_dir, images_with_annotations,
                                                                                args.xml_folder_name)
-
-        counter_annotations += annotations # count the number of annotations
         counter_images += images # count the number of images
-        print(counter_annotations, counter_images) # print the counters
+        print(counter_images) # print the counters
 
 
 if __name__ == '__main__':

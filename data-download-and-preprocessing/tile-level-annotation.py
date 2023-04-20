@@ -7,30 +7,25 @@ Import Packages
 """
 help("modules")
 import os
+from glob import glob
+import tempfile
+import shutil
 import argparse
 import cv2
 import math
-from glob import glob
 # Standard packages
 from datetime import datetime
-import tempfile
-import warnings
-import urllib
-import shutil
-import pickle
+
 # import requests
 from PIL import Image
-from io import BytesIO
 import tqdm
-from tqdm.notebook import tqdm_notebook
-from skimage.metrics import structural_similarity as compare_ssim
-import random
 import numpy as np
+import pandas as pd
+
 import fiona  # must be import before geopandas
 import geopandas as gpd
 import rasterio
 import rioxarray
-import re
 import rtree
 import pyproj
 import shapely
@@ -39,8 +34,6 @@ from shapely.ops import transform
 # from cartopy import crs
 import collections
 # Less standard, but still pip- or conda-installable
-import pandas as pd
-import numpy as np
 import matplotlib
 import matplotlib.pyplot as plt
 from matplotlib.patches import Rectangle
@@ -90,7 +83,7 @@ def main(args):
     
     #image/tile characteristics 
     tile_characteristics, image_characteristics = fc.image_tile_characteristics(args.parent_dir, args.tile_dir,
-                                                                                args.xml_folder_name, args.output_dir)
+                                                                                args.xml_folder_name)
     img_tile_char_time = datetime.now()
     print('Duration For Image Tile Characteristics: {}'.format(img_tile_char_time - start_time))
 
@@ -113,15 +106,26 @@ def main(args):
     print('Duration For Adding the state: {}'.format(political_boundaries_time - merge_tile_database_time))
     
     # add quadid and capture data 
-    #tile_level_annotations.tile_name[2:12]
-    #df.applymap(lambda x: x**2)
-    tile_database["quadid"] = tile_database.apply(lambda row: row.tile_name[2:12], axis=1)
-    tile_database["capturedate"] = tile_database.apply(lambda row: row.tile_name.rsplit('_',1)[1], axis=1)
-    tile_level_annotations.reset_index(drop=True, inplace=True)
+    tile_database["quad_id"] = tile_database.apply(lambda row: row.tile_name[2:12], axis=1)
+    tile_database["capture_date"] = tile_database.apply(lambda row: row.tile_name.rsplit('_',1)[1], axis=1)
+    tile_database.reset_index(drop=True, inplace=True)
     # Save tile dabasebase
-    fc.write_gdf(tile_database, args.tile_level_annotation_dir, args.tile_level_annotation_dataset_filename)
+    fc.write_gdf(tile_database, args.tile_level_annotation_dir, ["image_name"], args.tile_level_annotation_dataset_filename)
     end_time = datetime.now()
     print('Duration For creating the tile level annotations: {}'.format(end_time - start_time))
+
+    #write tile characteristics
+    tiles_with_annotations = np.unique(tile_database.tile_name)
+    tile_characteristics = tile_characteristics[tile_characteristics.tile_name.isin(tile_database)]
+    tile_characteristics.reset_index(drop=True, inplace=True)
+    tile_characteristics.to_csv(os.path.join(args.output_dir, "tile_characteristics.csv"), index=False)
+
+    #write image characteristics
+    images_with_annotations = [item for images in tile_database.image_name for item in images]
+    images_with_annotations = np.unique(images_with_annotations)
+    image_characteristics = image_characteristics[image_characteristics.image_name.isin(images_with_annotations)]
+    image_characteristics.reset_index(drop=True, inplace=True)
+    image_characteristics.to_csv(os.path.join(args.output_dir,"image_characteristics.csv"), index=False)
 
 if __name__ == '__main__':
     args = get_args_parse()
