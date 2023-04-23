@@ -50,16 +50,12 @@ def get_args_parse():
 def main(args):    
     dist = ap.annotator(args.img_anno_dir) #create the processing class
     dist.state_dcc_directory(args.parent_dir)
-    
     dist.number_of_tiles(args.num_tiles)
-    
     dist.get_tile_urls(args.tiles_remaining)
-
     dist.make_subdirectories()
     dist.download_images()
     dist.tile_rename()
     dist.chip_tiles(args.item_dim)
-    
     dist.track_tile_annotations(args.tiles_labeled)
     np.save(args.tiles_remaining, dist.tile_name_tile_url_remaining)
     np.save(args.tiles_labeled, dist.tile_name_tile_url_labeled)
