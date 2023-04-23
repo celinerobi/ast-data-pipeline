@@ -1,11 +1,6 @@
 """
-Create pandas csv of image characteristics  
-"""
-
-"""
 Import Packages
 """
-help("modules")
 import os
 from glob import glob
 import tempfile
@@ -13,15 +8,11 @@ import shutil
 import argparse
 import cv2
 import math
-# Standard packages
 from datetime import datetime
-
-# import requests
 from PIL import Image
 import tqdm
 import numpy as np
 import pandas as pd
-
 import fiona  # must be import before geopandas
 import geopandas as gpd
 import rasterio
@@ -31,9 +22,7 @@ import pyproj
 import shapely
 from shapely.geometry import Polygon, Point
 from shapely.ops import transform
-# from cartopy import crs
 import collections
-# Less standard, but still pip- or conda-installable
 import matplotlib
 import matplotlib.pyplot as plt
 from matplotlib.patches import Rectangle
@@ -50,7 +39,7 @@ import data_eng.form_calcs as fc
 
 def get_args_parse():
     parser = argparse.ArgumentParser(
-        description='This script adds a subdirectory of xmls to correct possible inconsistent labels')
+        description='Create tile level annotation dataset')
     parser.add_argument('--parent_dir', type=str, default=None,
                         help='path to parent directory, holding the img/annotation sub directories.')
     parser.add_argument('--tile_dir', type=str, default=None,

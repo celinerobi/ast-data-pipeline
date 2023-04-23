@@ -16,7 +16,7 @@ import data_eng.az_proc as ap
 
 def get_args_parse():
     parser = argparse.ArgumentParser(
-        description='This script adds a subdirectory of xmls to correct possible inconsistent labels')
+        description='Update validation')
     parser.add_argument('--tracker_file_path', type=str, default='outputs/tile_img_annotation_annotator.npy',
                         help='The file path of the numpy array that contains thes the image tracking')
     parser.add_argument('--home_directory', type=str, default = "//oit-nas-fe13dc.oit.duke.edu//data_commons-borsuk",

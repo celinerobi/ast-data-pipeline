@@ -1,55 +1,36 @@
-#Make into module, function specify annotator, directory as args
-#URG: updae tile_undone_npy
-
 #!/usr/bin/env python
 # coding: utf-8
-import numpy as np
-import pandas as pd
+
 import os
 import os.path
-import urllib.request
-import progressbar # pip install progressbar2, not progressbar
-
-import os
 import shutil
-
-import argparse
-
-import tempfile
 import urllib
-import shutil
-import os
-import os.path
+import urllib.request
+import tempfile
 import sys
-
-import PIL
-from PIL import Image
-
 import math
-import numpy as np
-import pandas as pd
 import rtree
 import pickle
-
-import progressbar # pip install progressbar2, not progressbar
-
+import warnings
+from zipfile import ZipFile
+import numpy as np
+import pandas as pd
 from geopy.geocoders import Nominatim
-
 from contextlib import suppress
+import progressbar # pip install progressbar2, not progressbar
+import argparse
+import PIL
+from PIL import Image
 
 import matplotlib
 import matplotlib.pyplot as plt
 from matplotlib.patches import ConnectionPatch
 
-import warnings
-from zipfile import ZipFile
-
-import argparse
 import data_eng.az_proc as ap
 
 def get_args_parse():
     parser = argparse.ArgumentParser(
-        description='This script adds a subdirectory of xmls to correct possible inconsistent labels')
+        description='allocate images for annotation')
     parser.add_argument('--parent_dir', type=str, default=None,
                         help='Path to parent dir; see dist_folder_map.txt for directory map.')
     parser.add_argument('--img_anno_dir', type=str, default=None,

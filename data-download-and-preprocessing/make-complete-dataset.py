@@ -1,8 +1,4 @@
 """
-Correct inconsistent labels
-"""
-
-"""
 Import Packages
 """
 import os
@@ -21,7 +17,7 @@ import data_eng.az_proc as ap
 
 def get_args_parse():
     parser = argparse.ArgumentParser(
-        description='This script adds a subdirectory of xmls to correct possible inconsistent labels')
+        description='Create complete dataset of aerial imagery')
     parser.add_argument('--parent_dir', type=str, default=None,
                         help='path to parent directory, holding the annotation directory.')
     parser.add_argument('--xml_folder_name', type=str, default="chips_positive_corrected_xml",

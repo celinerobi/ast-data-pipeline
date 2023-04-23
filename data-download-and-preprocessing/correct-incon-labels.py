@@ -1,8 +1,4 @@
 """
-Correct inconsistent labels and reclassify
-"""
-
-"""
 Import Packages
 """
 import shutil
@@ -19,8 +15,7 @@ import data_eng.form_calcs as fc
 
 def get_args_parse():
     parser = argparse.ArgumentParser(
-        description='This script adds a subdirectory of corrected xmls to correct possible inconsistent labels and '
-                    'reclassify tanks based on tanks size')
+        description='Correct inconsistent labels and reclassify tanks based on tanks size')
     parser.add_argument('--parent_dir', type=str, default=None,
                         help='path to parent directory, holding the img/annotation sub directories.')
     parser.add_argument('--orig_xml_folder_name', type=str, default="chips_positive_xml",

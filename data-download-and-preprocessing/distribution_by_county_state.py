@@ -11,10 +11,9 @@ import pandas as pd
 import geopandas as gpd
 import argparse
 
-
 def get_args_parse():
     parser = argparse.ArgumentParser(
-        description='Creates a table of the number of closed_roof_tanks, water_treatment_tank, spherical_tank, external_floating_roof_tank, water_tower for all of the images.')
+        description='Creates a table of the number of distribution of tanks by class by county and state.')
     parser.add_argument('--output_dir', type=str, default="/hpc/group/borsuklab/ast/distribution",
                         help='Directory to store output files.')
     parser.add_argument('--tile_level_annotation_dataset_path', type=str, 
@@ -47,13 +46,6 @@ def main(args):
     state_percent.sort_values(by=['Total'], ascending=False).to_csv('AST distribution by state percent.csv')
     county_id_count.sort_values(by=['Total'], ascending=False).to_csv('AST distribution by county count.csv')
     county_id_percent.sort_values(by=['Total'], ascending=False).to_csv('AST distribution by county percentage.csv')
-    
-    #48 201 Harris TX
-    #06 029 Kern CA
-    #22 019 Calcasieu LA 
-    #06 037 Los Angeles CA
-    #47 157 Shelby TN 
-    #40 081 Lincoln OK 2nd most external floating roof tanks (355)
 
 if __name__ == '__main__':
     args = get_args_parse()

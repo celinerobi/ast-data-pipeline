@@ -1,12 +1,7 @@
 """
-Record the tile, chip, and annotation file names, chip pathway, and annotator name in a csv and npy array after each worker has reviewed their annotations.
-"""
-
-"""
 Import Packages
 """
 import argparse
-
 import numpy as np
 import pandas as pd
 from pathlib import Path
