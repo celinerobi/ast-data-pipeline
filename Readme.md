@@ -18,10 +18,6 @@
 
     * [8. Data Summary](#data-summary)
 ## General Information
-- Provide general information about your project here.
-- What problem does it (intend to) solve?
-- What is the purpose of your project?
-- Why did you undertake it?
 - Data Annotation: 
     - The Annotation tool is in labelImg.zip.
     - Data annotations are created using the LabelImg graphical image annotation tool. The tool has been developed in Python using Qt as its graphical interface. The annotations were created as XML files in the PASCAL VOC format. Unless otherwise noted, annotations and bbounding boxes in the source code are assumed to the in Pascal VOC Format [x_min, y_min, x_max, ymax], where x_min and y_min are coordinates of the top-left corner of the bounding box and x_max and y_max are the coordinates o the bottom right corner.
