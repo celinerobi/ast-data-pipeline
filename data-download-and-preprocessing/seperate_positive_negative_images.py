@@ -22,7 +22,7 @@ import matplotlib
 import matplotlib.pyplot as plt
 from matplotlib.patches import ConnectionPatch
 
-import data_eng.az_proc as ap
+import src.az_proc as ap
 
 def get_args_parse():
     parser = argparse.ArgumentParser(

@@ -24,29 +24,9 @@
 - Data Annotation: 
     - The Annotation tool is in labelImg.zip.
     - Data annotations are created using the LabelImg graphical image annotation tool. The tool has been developed in Python using Qt as its graphical interface. The annotations were created as XML files in the PASCAL VOC format. Unless otherwise noted, annotations and bbounding boxes in the source code are assumed to the in Pascal VOC Format [x_min, y_min, x_max, ymax], where x_min and y_min are coordinates of the top-left corner of the bounding box and x_max and y_max are the coordinates o the bottom right corner.
-    For flexibility, a script has been included to convert the annotations to COCO format.
-Annotations and  
-Bounding boxes 
-
-The installation infromation and guide can be found at https://github.com/tzutalin/labelImg. 
+    - The installation infromation and guide can be found at https://github.com/tzutalin/labelImg. 
 ## 0. Tile Identification 
 NAIP data is accessed using the Microsoft Planetary Computer STAC API. To download tiles of interest, the file pathway have been identified and collected using the EIA, HFID, and other datasources. The naip_pathways.ipynb jupyter notebook processess these datasources and creates/saves a numpy array of the tile names and tile urls.
-## 1. Data Download
-download_distribution.py distributes tiles to annotators.
-
-python cred/AST_dataset/data_download_and_preprocessing/download_distribution.py --number_of_tiles number
-                                            --annotation_directory annotator_name
-                                            --parent_directory \dir_containing_chips_and_annotations
-                                            --tiles_remaining path_to_numpy_array
-                                            --tiles_labeled path_to_numpy_array
-                                            
-Example:
-python download_distribution.py --number_of_tiles 8 --annotation_directory Kang_10 --parent_directory \\oit-nas-fe13dc.oit.duke.edu\\data_commons-borsuk\\labelwork --tiles_remaining tile_name_tile_url_remaining_expanded.npy --tiles_labeled tile_name_tile_url_labeled.npy
-
-python download_distribution.py --number_of_tiles 4 --annotation_directory set6 --parent_directory \\oit-nas-fe13dc.oit.duke.edu\\data_commons-borsuk\\uncomplete_sets --tiles_remaining tile_name_tile_url_remaining_expanded.npy --tiles_labeled tile_name_tile_url_labeled.npy
-
-
-
 
 ### Naming Convention:
 #### Tile Naming Convention:
@@ -61,72 +41,59 @@ The two npy files record the tiles have been labeled (tile_name_tile_url_labeled
 Each tile 
 **Index**
 The index of a 512x512 chips which is clipped from a tile. 
-**Data clipping**
 
+## 1. Data Download
+download_distribution.py distributes tiles to annotators.
 
+python download-distribution.py --number_of_tiles number
+                                            --annotation_directory annotator_name
+                                            --parent_directory \dir_containing_chips_and_annotations
+                                            --tiles_remaining path_to_numpy_array
+                                            --tiles_labeled path_to_numpy_array
+ 
 ## 2. Seperate Positive and Negative Images
 After the annotators have annotated images, the positive (the images containing objects) and negative (the images that do not contain objects) must be placed in seperate folders.
 This can be completed by running the following script in the command line.
 
-cred/AST_dataset/data_download_and_preprocessing/seperate_positive_negative_images.py
-
-python cred\AST_dataset\data_download_and_preprocessing\seperate_positive_negative_images.py  --annotation_directory annotator_name
-                                             --parent_directory \dir_containing_chips_and_annotations
+seperate_positive-negative-images.py  --annotation_directory annotator_name
+                                      --parent_directory \dir_containing_chips_and_annotations
                                              
 Example:
-python seperate_positive_negative_images.py  --annotation_directory unverified_images_not_reviewed_by_student31_Poonacha --parent_directory \\oit-nas-fe13dc.oit.duke.edu\\data_commons-borsuk\\labelwork
+python seperate-positive-negative-images.py  --annotation_directory unverified_images_not_reviewed_by_student31_Poonacha --parent_directory \\oit-nas-fe13dc.oit.duke.edu\\data_commons-borsuk\\labelwork
 
-python seperate_positive_negative_images.py  --annotation_directory student_reviewed_images17_Sunny --parent_directory \\oit-nas-fe13dc.oit.duke.edu\\data_commons-borsuk\\unverified_images\student_reviewed_unverified_images_set7\Sunny
+python seperate-positive-negative-images.py  --annotation_directory student_reviewed_images17_Sunny --parent_directory \\oit-nas-fe13dc.oit.duke.edu\\data_commons-borsuk\\unverified_images\student_reviewed_unverified_images_set7\Sunny
 
 ## 3. Record Annotator
 After the annotators have reviewed their images to fix any small errors, the organizer relocates their images into the *Unverified* folder. This folder is organized by annotator, by annotation set. To record which annotations have been recorded by which annotator in a centralized location, the following script is run. This produces two outputs, a npy array and a csv which indicate the tile, chip, xml, and annotator. 
 
-python track_annotator_draw.py  --parent_directory \dir_containing_all_chips_and_annotations
+python track-annotator-draw.py  --parent_directory \dir_containing_all_chips_and_annotations
                                              
-Example:
-python track_annotator_draw.py --parent_directory C:\chip_allocation
-
-python track_annotator_draw.py --parent_directory \\oit-nas-fe13dc.oit.duke.edu\\data_commons-borsuk\\unverified_images/student_reviewed_unverified_images_set7
-
-Troubleshooting:
-ValueError: all the input array dimensions for the concatenation axis must match exactly...
-Ensure that: Thumbs.db files have been removed from the folder containing the images (chips_positive); files containing predefined classes have been removed from the folder containing annotations (chips_positive_xml); positive images have been copied to the correct folder (chip_positive).
 ## 4. Verification and Tracking
 After the annotators have reviewed their images to fix any small errors, the organizer relocates their images into the *Unverified* folder. This folder is organized by annotator, by annotation set. To record which annotations have been recorded by which annotator in a centralized location, the following script is run. This produces two outputs, a npy array and a csv which indicate the tile, chip, xml, and annotator. 
 
-python verification_and_tracking.py     --tracker_file_path path_to_tracker_numpy_array
+python verification-and-tracking.py     --tracker_file_path path_to_tracker_numpy_array
                                         --home_directory path_to_home_directory
                                         --verifiers coverage_quality_class
                                         --set_number the_set_number
                                         --annotator_allocation annotator1 annotator2
-Example:
-python verification_and_tracking.py --tracker_file_path outputs\tile_img_annotation_annotator.npy  --home_directory \\oit-nas-fe13dc.oit.duke.edu\\data_commons-borsuk\\ --verifiers Sunny_Cleave_Robinson --annotator_allocation Niculescu --set_number 7
-
-
 
 ## 5. Compare Images to ensure image name and data match
-- compare_imgs.sh
+- compare_imgs.sh 
 
 ## 6. Standardize Object Labels 
-- correct_incorrect_labels.sh
+While the predefined classes have been provided to annotators, it is possible for there to be inconsistencies in the label names. The object label names are standardized based on known errors using the compiled imagery and annotation datasets.
+
+python correct_incorrect_labels.py --parent_dir compiled_imagery_dataset
 
 ## 7. Merge and Compile Tile Level Annotations
-- tile_level_annotation_dataset.sh 
+The annotations for each imagery are merged by each time to create a national invetory of above ground storage tanks.
+
+tile-level-annotation.py --parent_dir compiled_imagery_dataset --xml_folder_name chips_positive_corrected_xml 
+                         --tile_dir tile_dir --tile_level_annotation_dir output_dir --tile_level_annotation_dataset_filename file_name
+                         --county_gpd_path zipped_county_data
 
 ## 8. Create Complete Dataset
-- make_complete_dataset.sh 
+make_complete_dataset.py
 
 ## 9. Data Summary
-- data_clean_descrip.sh (after complete dataset)
-
-
-
-
-
-
-## Post Procesing
-## 8. Move and Download Tiles
-python move_download_tiles.py
-# 9. Image Characteristics
-python image_characteristics.py
-destination_filenames
+- data_clean_descrip.py

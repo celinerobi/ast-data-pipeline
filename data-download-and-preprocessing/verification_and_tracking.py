@@ -12,7 +12,7 @@ from pathlib import Path
 import os
 import shutil
 from glob import glob
-import data_eng.az_proc as ap
+import src.az_proc as ap
 
 def get_args_parse():
     parser = argparse.ArgumentParser(

@@ -13,7 +13,7 @@ import xml.dom.minidom
 from xml.dom.minidom import parseString
 import xml.etree.ElementTree as ET
 import argparse
-import data_eng.az_proc as ap
+import src.az_proc as ap
 
 def get_args_parse():
     parser = argparse.ArgumentParser(
