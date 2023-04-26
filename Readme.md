@@ -1,5 +1,5 @@
-# NAIP Data Download and Processing 
-> This repository contains the necessary python files to 1) download and process NAIP tiles; 2) chip tiles in 512 x 512 images while conserving resolution, 3) allocate images to annotators; 4) seperate postive and negatives; 5) standardize object labels; 6) allocate images for verfication; 7) compile a data summary. 
+# Above Ground Stroage Tank Data Pipeline
+> This repository contains the necessary python files to download and process NAIP tiles; chip tiles in 512 x 512 images while conserving resolution, allocate images to annotators; seperate postive and negatives; standardize object labels; allocate images for verfication; compile a data summary. 
 
 ## Table of Contents
 * [General Info](#general-information)
@@ -12,9 +12,10 @@
     * [2. Seperate Positive and Negative Images](#seperate-positive-and-negative-images)
     * [3. Record Annotator](#record-annotator)
     * [4. Verification and Tracking](#verification-and-tracking)
-    * [5. Create Complete Dataset](#create-complete-dataset)
-    * [6. Standardize Object Labels](#standardize-object-labels)
-    * [7. Identify Missing Annotations](#identify-missing-annotations)
+    * [5. Standardize Object Labels](#standardize-object-labels)
+    * [6. Create Tank Inventory](#identify-missing-annotations)
+    * [7. Create Complete Dataset](#create-complete-dataset)
+
     * [8. Data Summary](#data-summary)
 ## General Information
 - Provide general information about your project here.
@@ -77,23 +78,21 @@ python verification-and-tracking.py     --tracker_file_path path_to_tracker_nump
                                         --set_number the_set_number
                                         --annotator_allocation annotator1 annotator2
 
-## 5. Compare Images to ensure image name and data match
-- compare_imgs.sh 
 
-## 6. Standardize Object Labels 
+## 5. Standardize Object Labels 
 While the predefined classes have been provided to annotators, it is possible for there to be inconsistencies in the label names. The object label names are standardized based on known errors using the compiled imagery and annotation datasets.
 
 python correct_incorrect_labels.py --parent_dir compiled_imagery_dataset
 
-## 7. Merge and Compile Tile Level Annotations
+## 6. Create Tank Inventory
 The annotations for each imagery are merged by each time to create a national invetory of above ground storage tanks.
 
 tile-level-annotation.py --parent_dir compiled_imagery_dataset --xml_folder_name chips_positive_corrected_xml 
                          --tile_dir tile_dir --tile_level_annotation_dir output_dir --tile_level_annotation_dataset_filename file_name
                          --county_gpd_path zipped_county_data
 
-## 8. Create Complete Dataset
+## 7. Create Complete Dataset
 make_complete_dataset.py
 
-## 9. Data Summary
+## 8. Data Summary
 - data_clean_descrip.py
